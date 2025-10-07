@@ -1,12 +1,14 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
+import path from "path"
 
 import authRoutes from './routes/auth.route.js'
 import userRoutes from "./routes/user.route.js"
 import travelStoryRoutes from "./routes/travelStory.route.js"
 
 import cookieParser from 'cookie-parser'
+import { fileURLToPath } from 'url'
 
 dotenv.config();
 
@@ -25,6 +27,11 @@ app.use(cookieParser())
 
 
 app.use(express.json())
+
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+app.use("/uploads", express.static(path.join(__dirname,"uploads")))
 
 app.use(express.urlencoded({ extended: true }));
 
