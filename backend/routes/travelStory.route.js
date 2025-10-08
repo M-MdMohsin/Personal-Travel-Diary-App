@@ -1,6 +1,6 @@
 import express from "express"
 import { verifyToken } from "../utils/varifyUser.js"
-import { addTravelStory, deleteImage, editTravelStory, getAllTravelStory, imageUpload } from "../controllers/travelStory.controller.js"
+import { addTravelStory, deleteImage, deleteTravelStory, editTravelStory, getAllTravelStory, imageUpload } from "../controllers/travelStory.controller.js"
 import upload from "../multer.js"
 
 
@@ -15,5 +15,7 @@ router.post("/image-upload", upload.single("image"), imageUpload)
 router.delete("/delete-image", deleteImage)
 
 router.post("/edit-story/:id", verifyToken, editTravelStory)
+
+router.delete("/delete-story/:id", verifyToken, deleteTravelStory)
  
 export default router
