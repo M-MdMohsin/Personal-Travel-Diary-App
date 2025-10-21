@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react"
-// import PasswordInput from "../../components/PasswordInput"
 import { useNavigate } from "react-router-dom"
 import PasswordInput from "../../components/PasswordInput"
-// import axiosInstance from "../../utils/axiosInstance"
-// import { validateEmail } from "../../utils/helper"
+import axiosInstance from "../../utils/axiosInstance"
+import { validateEmail } from "../../utils/helper"
 // import { useDispatch, useSelector } from "react-redux"
 // import {
 //   signInFailure,
@@ -13,7 +12,7 @@ import PasswordInput from "../../components/PasswordInput"
 
 const Login = () => {
   const navigate = useNavigate()
-//   const dispatch = useDispatch()
+  // const dispatch = useDispatch()
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -21,50 +20,51 @@ const Login = () => {
 
 //   const { loading, currentUser } = useSelector((state) => state.user)
 
-//   const handleSubmit = async (e) => {
-//     e.preventDefault()
+  const handleSubmit = async (e) => {
+    e.preventDefault()
 
-//     if (!validateEmail(email)) {
-//       setError("Please enter a valid email address.")
-//       return
-//     }
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address.")
+      return
+    }
 
-//     if (!password) {
-//       setError("Please enter your password.")
-//       return
-//     }
+    if (!password) {
+      setError("Please enter your password.")
+      return
+    }
 
-//     setError(null)
+    setError(null)
 
 //     // Login API call
-//     try {
-//       dispatch(signInStart())
+    try {
+      // dispatch(signInStart())
 
-//       const response = await axiosInstance.post("/auth/signin", {
-//         email,
-//         password,
-//       })
+      const response = await axiosInstance.post("/auth/signin", {
+        email,
+        password,
+      })
 
-//       if (response.data) {
-//         dispatch(signInSuccess(response.data))
-//         navigate("/")
-//       } else {
-//         dispatch(signInFailure("An unexpected error occurred!"))
-//       }
-//     } catch (error) {
-//       dispatch(signInFailure("An unexpected error occurred!"))
+      if (response.data) {
+        // dispatch(signInSuccess(response.data))
+        navigate("/")
+      }
+      //  else {
+      //   dispatch(signInFailure("An unexpected error occurred!"))
+      // }
+    } catch (error) {
+      // dispatch(signInFailure("An unexpected error occurred!"))
 
-//       if (
-//         error.response &&
-//         error.response.data &&
-//         error.response.data.message
-//       ) {
-//         setError(error.response.data.message)
-//       } else {
-//         setError("Something went wrong. Please try again.")
-//       }
-//     }
-//   }
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        setError(error.response.data.message)
+      } else {
+        setError("Something went wrong. Please try again.")
+      }
+    }
+  }
 
 //   useEffect(() => {
 //     if (!loading && currentUser) {
@@ -90,7 +90,7 @@ const Login = () => {
         </div>
 
         <div className="w-2/4 h-[75vh] bg-white rounded-r-lg relative p-16 shadow-lg shadow-cyan-200/20">
-          <form            >
+          <form onClick={handleSubmit}>
             <h4 className="text-2xl font-semibold mb-7">Login</h4>
 
             <input
@@ -108,7 +108,11 @@ const Login = () => {
               }}
             />
 
-            {/* {error && <p className="text-red-500 text-xs pb-1">{error}</p>} */}
+            {error && <p className="text-red-500 text-xs pb-1">{error}</p>}
+
+            <button type="submit" className="btn-primary">
+                LOGIN
+            </button>
 
             {/* {loading ? (
               <p className="animate-pulse w-full text-center btn-primary">

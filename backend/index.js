@@ -2,6 +2,7 @@ import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import path from "path"
+import cors from "cors"
 
 import authRoutes from './routes/auth.route.js'
 import userRoutes from "./routes/user.route.js"
@@ -24,6 +25,12 @@ mongoose
 const app = express();
 
 app.use(cookieParser())
+
+app.use(cors({
+  origin : "http://localhost:5173",
+  methods: ['GET','POST','PUT','DELETE'],
+  credentials: true,
+}))
 
 
 app.use(express.json())
