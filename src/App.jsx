@@ -3,6 +3,7 @@ import SignUp from './pages/auth/SignUp.jsx'
 import Login from './pages/auth/Login.jsx'
 import Home from './pages/home/Home.jsx'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import PrivateRoute from './components/PrivateRoute.jsx'
 
 
 const App = () => {
@@ -10,7 +11,7 @@ const App = () => {
       <>
       <BrowserRouter>
         <Routes>
-          <Route>
+          <Route element= {<PrivateRoute/>}>
             <Route path="/" exact element={<Home />} />
           </Route>
 
