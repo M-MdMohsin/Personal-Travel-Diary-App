@@ -1,8 +1,9 @@
 import React from "react"
 import { Link, useNavigate } from "react-router-dom"
 import Profile from "./Profile"
-// import axiosInstance from "../utils/axiosInstance"
-// import { signOutSuccess } from "../redux/slice/userSlice"
+import axiosInstance from "../utils/axiosInstance"
+import { useDispatch } from "react-redux"
+import { signOutSuccess } from "../redux/slice/userSlice"
 // import { useDispatch } from "react-redux"
 // import SearchBar from "./SearchBar"
 
@@ -14,22 +15,22 @@ const Navbar = (
 //   handleClearSearch,
 // }
 ) => {
-//   const dispatch = useDispatch()
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
-//   const onLogout = async () => {
-//     try {
-//       const response = await axiosInstance.post("/user/signout")
+  const onLogout = async () => {
+    try {
+      const response = await axiosInstance.post("/user/signout")
 
-//       if (response.data) {
-//         dispatch(signOutSuccess())
+      if (response.data) {
+        dispatch(signOutSuccess())
 
-//         navigate("/login")
-//       }
-//     } catch (error) {
-//       console.log(error)
-//     }
-//   }
+        navigate("/login")
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
 //   const handleSearch = () => {
 //     if (searchQuery) {
@@ -60,9 +61,7 @@ const Navbar = (
         onClearSearch={onClearSearch}
       /> */}
 
-
-      <Profile />
-      {/* <Profile onLogout={onLogout} /> */}
+      <Profile onLogout={onLogout} />
     </div>
   )
 }
