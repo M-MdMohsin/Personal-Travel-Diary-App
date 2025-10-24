@@ -15,3 +15,12 @@ import { errorHandler } from "../utils/error.js"
     res.status(200).json(rest)
 
  }
+
+ export const signout = async (req,res,next) => {
+    try {
+        res.clearCookie("access_token").status(200).json("User has been successfully logout")
+
+    } catch(error) {
+        next(error)
+    }
+ }
