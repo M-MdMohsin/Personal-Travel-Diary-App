@@ -53,4 +53,8 @@
     .input-label {
         @apply text-xs text-slate-400
     }
+
+    .icon-btn {
+        @apply text-[22px] text-slate-300 cursor-pointer hover:text-red-500
+    }
 }
