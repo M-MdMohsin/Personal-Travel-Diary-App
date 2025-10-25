@@ -3,7 +3,7 @@ import moment from 'moment'
 import { IoLocationSharp } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa";
 
-const TravelStoryCard = ({imageUrl, title, story, date, isFavourite, onEdit, onClick, onFavouriteClick, visitedLocation}) => {
+const TravelStoryCard = ({imageUrl, title, story, date, isFavorite, onEdit, onClick, onFavouriteClick, visitedLocation}) => {
   return (
     <div className="border border-slate-200 border-slate-200 rounded-lg overflow-hidden bg-white hover:shadow-lg hover:shadow-slate-200 transition-all ease-in-out relative cursor-pointer">
         <img src={imageUrl} alt={title} className="w-full h-56 object-cover rounded-lg"
@@ -11,7 +11,7 @@ const TravelStoryCard = ({imageUrl, title, story, date, isFavourite, onEdit, onC
         />
         <button className= "w-12 h-12 flex items-center justify-center bg-white/40 rounded-lg border border-white/30 absolute top-4 right-4" 
             onClick={onFavouriteClick}>
-                <FaHeart className= {`icon-btn ${isFavourite ? "text-red-500" : "text-white"} hover: text-red-500`}/>
+                <FaHeart className= {`icon-btn ${isFavorite ? "text-red-500" : "text-white"} hover: text-red-500`}/>
             </button>
 
         <div className="p-4" onClick={onClick}>
