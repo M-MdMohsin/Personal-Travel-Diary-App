@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import { MdAdd } from "react-icons/md";
 import Modal from 'react-modal'
 import AddEditTravelStory from '../../components/AddEditTravelStory'
+import ViewTravelStory from './ViewTravelStory'
 
 
 const Home = () => {
@@ -17,6 +18,10 @@ const Home = () => {
   const [openAddEditModal, setOpenAddEditModal] = useState({
     isShown: false,
     type: "add",
+    data: null,
+  })
+  const [openViewModal, setOpenViewModal] = useState({
+    isShown: false,
     data: null,
   })
 
@@ -35,7 +40,9 @@ const Home = () => {
 
   const handleEdit = async (data) => {}
 
-  const handleViewStory = async (data) => {}
+  const handleViewStory = async (data) => {
+    setOpenViewModal({ isShown: true, data})
+  }
 
   const updateIsFavourite = async (storyData) => {
     const storyId = storyData._id
@@ -116,6 +123,34 @@ const Home = () => {
             setOpenAddEditModal({ isShown: false, type: "add", data: null })
           }}
           getAllTravelStories={getAllTravelStories}
+        />
+      </Modal>
+
+      {/* View travel story modal */}
+      <Modal
+        isOpen={openViewModal.isShown}
+        onRequestClose={() => {}}
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0,0,0,0.2)",
+            zIndex: 999,
+          },
+        }}
+        appElement={document.getElementById("root")}
+        className="w-[80vw] md:w-[40%] h-[80vh] bg-white rounded-lg mx-auto mt-14 p-5 overflow-y-scroll scrollbar z-50"
+      >
+        <ViewTravelStory
+          storyInfo={openViewModal.data || null}
+          onClose={() => {
+            setOpenViewModal((prevState) => ({ ...prevState, isShown: false }))
+          }}
+          onEditClick={() => {
+            setOpenViewModal((prevState) => ({ ...prevState, isShown: false }))
+            handleEdit(openViewModal.data || null)
+          }}
+          onDeleteClick={() => {
+            deleteTravelStory(openViewModal.data || null)
+          }}
         />
       </Modal>
 
