@@ -38,7 +38,9 @@ const Home = () => {
   }
 
 
-  const handleEdit = async (data) => {}
+  const handleEdit = async (data) => {
+    setOpenAddEditModal({ isShown: true, type: "edit", data: data})
+  }
 
   const handleViewStory = async (data) => {
     setOpenViewModal({ isShown: true, data})
