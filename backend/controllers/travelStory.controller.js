@@ -109,6 +109,10 @@ export const editTravelStory = async (req, res, next) => {
   const { title, story, visitedLocation, imageUrl, visitedDate } = req.body
   const userId = req.user.id
 
+  const test = await TravelStory.findById(id)
+  console.log("foundById:", test.userId)
+  console.log("token userId:", userId)
+
   // validate required field
   if (!title || !story || !visitedLocation || !visitedDate) {
     return next(errorHandler(400, "All fields are required"))
@@ -120,16 +124,18 @@ export const editTravelStory = async (req, res, next) => {
   try {
     const travelStory = await TravelStory.findOne({_id: id, userId: userId})
     
-    console.log(id)
+
     if (!travelStory) {
-      next(errorHandler(404, "Travel Story not found!"))
+      return next(errorHandler(404, "Travel Story not found!"))
     }
 
     const placeholderImageUrl = `http://localhost:3000/assets/placeholder_image.png`
 
     travelStory.title = title
     travelStory.story = story
-    travelStory.visitedLocation = visitedLocation
+    if (Array.isArray(visitedLocation)) {
+      travelStory.visitedLocation = visitedLocation;
+    }
     travelStory.imageUrl = imageUrl || placeholderImageUrl
     travelStory.visitedDate = parsedVisitedDate
 

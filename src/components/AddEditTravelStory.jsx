@@ -18,7 +18,9 @@ const AddEditTravelStory = ({
 
   const [error, setError] = useState("")
 
-  const [visitedDate, setVisitedDate] = useState(storyInfo?.visitedDate || null)
+  const [visitedDate, setVisitedDate] = useState(
+    storyInfo?.visitedDate ? new Date(storyInfo.visitedDate) : null
+  )
   const [title, setTitle] = useState(storyInfo?.title || "")
   const [storyImg, setStoryImg] = useState(storyInfo?.imageUrl || null)
   const [story, setStory] = useState
@@ -27,7 +29,59 @@ const AddEditTravelStory = ({
     storyInfo?.visitedLocation || []
   )
   
-  const updateTravelStory = async () => {}
+  const updateTravelStory = async () => {
+    const storyId = storyInfo._id
+    console.log(storyId)
+
+    try {
+      let imageUrl = ""
+
+      let postData = {
+        title,
+        story,
+        imageUrl: storyInfo.imageUrl || "",
+        visitedLocation,
+        visitedDate: visitedDate
+          ? moment(visitedDate).valueOf()
+          : moment().valueOf(),
+      }
+
+      if (typeof storyImg === "object") {
+        // Upload new image
+        const imageUploadRes = await uploadImage(storyImg)
+
+        imageUrl = imageUploadRes.imageUrl || ""
+
+        postData = {
+          ...postData,
+          imageUrl: imageUrl,
+        }
+      }
+
+      const response = await axiosInstance.post(
+        "/travel-story/edit-story/" + storyId,
+        postData
+      )
+
+      if (response.data && response.data.story) {
+        toast.success("Story updated successfully!")
+
+        getAllTravelStories()
+
+        onClose()
+      }
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        setError(error.response.data.message)
+      } else {
+        setError("Something went wrong! Please try again.")
+      }
+    }
+  }
 
 
   const addNewTravelStory = async () => {
@@ -101,7 +155,7 @@ const AddEditTravelStory = ({
             ) : (
               <>
                 <button className="btn-small" 
-                // onClick={handleAddOrUpdateClick}
+                onClick={handleAddOrUpdateClick}
                 >
                   <MdOutlineUpdate className="text-lg" /> UPDATE STORY
                 </button>
@@ -163,7 +217,6 @@ const AddEditTravelStory = ({
 
           <div className="pt-3">
             <label className="input-label">VISITED LOCATIONS</label>
-
             <TagInput tags={visitedLocation} setTags={setVisitedLocation} />
           </div>
         </div>

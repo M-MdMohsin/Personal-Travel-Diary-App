@@ -3,7 +3,7 @@ import { IoMdAdd, IoMdClose } from "react-icons/io"
 import { FaLocationDot } from "react-icons/fa6"
 
 const TagInput = ({ tags, setTags }) => {
-  const [inputValue, setInputValue] = useState([])
+  const [inputValue, setInputValue] = useState("")
 
   const addNewTag = () => {
     if (inputValue.trim() !== "") {

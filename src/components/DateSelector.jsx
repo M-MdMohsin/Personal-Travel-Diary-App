@@ -4,7 +4,7 @@ import { DayPicker } from 'react-day-picker'
 import { IoMdClose } from 'react-icons/io'
 import { MdDateRange } from 'react-icons/md'
 
-const DateSelector = (date, setDate) => {
+const DateSelector = ({date, setDate}) => {
 
     const [openDatePicker, setOpenDatePicker] = useState(false)
    return (
