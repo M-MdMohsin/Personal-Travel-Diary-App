@@ -24,6 +24,7 @@ const AddEditTravelStory = ({
   const [title, setTitle] = useState(storyInfo?.title || "")
   const [storyImg, setStoryImg] = useState(storyInfo?.imageUrl || null)
   const [story, setStory] = useState
+
   (storyInfo?.story || "")
   const [visitedLocation, setVisitedLocation] = useState(
     storyInfo?.visitedLocation || []
@@ -136,7 +137,39 @@ const AddEditTravelStory = ({
     }
   }
 
-  const handleDeleteStoryImage = () => {}
+  const handleDeleteStoryImage = async () => {
+    //deleting the image
+    const deleteImageResponse = await axiosInstance.delete(
+      "/travel-story/delete-image", {
+        params: {
+          imageUrl: storyInfo.imageUrl,
+        },
+      }
+    )
+
+    if(deleteImageResponse.data) {
+      const storyId = storyInfo._id
+      const postData = {
+        title,
+        story,
+        visitedLocation,
+        visitedDate: moment().valueOf(),
+        imageUrl: "",
+      }
+
+      const response = await axiosInstance.post(
+        "/travel-story/edit-story/" + storyId, postData
+      )
+      
+      if(response.data) {
+        toast.success("Story Image deleted Successfully")
+
+        setStoryImg(null)
+        
+        getAllTravelStories()
+      }
+    }
+  }
 
   return (
     <div className="relative">
@@ -160,7 +193,7 @@ const AddEditTravelStory = ({
                   <MdOutlineUpdate className="text-lg" /> UPDATE STORY
                 </button>
 
-                <button className="btn-small btn-delete">
+                <button className="btn-small btn-delete" >
                   <MdOutlineDeleteOutline className="text-lg" /> DELETE STORY
                 </button>
               </>
