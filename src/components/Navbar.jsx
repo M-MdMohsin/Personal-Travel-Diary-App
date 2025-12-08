@@ -4,16 +4,17 @@ import Profile from "./Profile"
 import axiosInstance from "../utils/axiosInstance"
 import { useDispatch } from "react-redux"
 import { signOutSuccess } from "../redux/slice/userSlice"
+import SearchBar from "./SearchBar"
 // import { useDispatch } from "react-redux"
 // import SearchBar from "./SearchBar"
 
 const Navbar = (
-//     {
-//   searchQuery,
-//   setSearchQuery,
-//   onSearchNote,
-//   handleClearSearch,
-// }
+    {
+  searchQuery,
+  setSearchQuery,
+  onSearchNote,
+  handleClearSearch,
+}
 ) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -32,16 +33,16 @@ const Navbar = (
     }
   }
 
-//   const handleSearch = () => {
-//     if (searchQuery) {
-//       onSearchNote(searchQuery)
-//     }
-//   }
-
-//   const onClearSearch = () => {
-//     handleClearSearch()
-//     setSearchQuery("")
-//   }
+  const handleSearch = () => {
+    if (searchQuery) {
+      onSearchNote(searchQuery)
+    }
+  }
+ 
+  const onClearSearch = () => {
+    handleClearSearch()
+    setSearchQuery("")
+  }
 
   return (
     <div className="bg-white flex items-center justify-between px-10 py-2 drop-shadow sticky top-0 z-10">
@@ -52,14 +53,14 @@ const Navbar = (
         </h1>
       </Link>
 
-      {/* <SearchBar
+      <SearchBar
         value={searchQuery}
         onChange={(e) => {
           setSearchQuery(e.target.value)
         }}
         handleSearch={handleSearch}
         onClearSearch={onClearSearch}
-      /> */}
+      />
 
       <Profile onLogout={onLogout} />
     </div>
