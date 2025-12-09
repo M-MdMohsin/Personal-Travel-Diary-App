@@ -13,14 +13,14 @@ const TravelStoryCard = ({imageUrl, title, story, date, isFavorite, onEdit, onCl
         <button className= "w-12 h-12 flex items-center justify-center bg-white/40 rounded-lg border border-white/30 absolute top-4 right-4" 
             onClick={onFavouriteClick}>
                 <FaHeart className= {`icon-btn ${isFavorite ? "text-red-500" : "text-white"} hover:text-red-500`}/>
-            </button>
+        </button>
 
         <div className="p-4" onClick={onClick}>
             <div className="flex items-center gap-3">
                 <div className="flex-1">
                     <h6 className="text-[16px] font-medium">{title}</h6>
                     <span className = "text-xs text-slate-500">
-                        {date ? moment().format("Do MMM YYYY") : "-"}
+                        {date ? moment(date).format("Do MMM YYYY") : "-"}
                     </span>
                 </div>
             </div>
