@@ -11,6 +11,7 @@ import EmptyCard from '../../components/EmptyCard'
 import { DayPicker } from 'react-day-picker'
 import FilterInfoTitle from '../../components/FilterInfoTitle'
 import moment from 'moment'
+import { getEmptyCardMessage } from '../../utils/helper'
 
 
 const Home = () => {
@@ -191,8 +192,7 @@ const Home = () => {
                 imgSrc={
                   "https://images.pexels.com/photos/5706021/pexels-photo-5706021.jpeg?auto=compress&cs=tinysrgb&w=600"
                 }
-                message={`Start Creating your first travel story! Click the 'Add' button to
-                   write down your thoughts, ideas and memories. Let's get started!` }
+                message={getEmptyCardMessage(filterType)}
                 setOpenAddEditModal={() =>
                   setOpenAddEditModal({
                     isShown: true,
@@ -213,7 +213,7 @@ const Home = () => {
                   onSelect={handleDayClick}
                   pagedNavigation/>
               </div>
-              
+
             </div>
 
           </div>
